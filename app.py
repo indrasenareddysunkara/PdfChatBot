@@ -16,7 +16,7 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 # 🔑 Load API Key
 # -----------------------
 load_dotenv()
-os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
+# os.environ["GROQ_API_KEY"] = os.getenv("GROQ_API_KEY")
 
 # -----------------------
 # 🧠 Session State
@@ -62,7 +62,7 @@ def process_pdfs(uploaded_files):
     llm = ChatGoogleGenerativeAI(
     model="gemini-3.1-flash-lite-preview",
     temperature=0.3,
-    google_api_key=os.getenv("GROQ_API_KEY")  # 👈 important
+    google_api_key=st.secrets["GROQ_API_KEY"]  # 👈 important
 )
     return vectorstore, llm
 
