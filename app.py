@@ -43,7 +43,7 @@ def process_pdfs(uploaded_files):
 
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
             tmp.write(file.getbuffer())
-            tmp.flush()  # ✅ VERY IMPORTANT
+            tmp.flush()  
 
             try:
                 loader = PyPDFLoader(tmp.name)
