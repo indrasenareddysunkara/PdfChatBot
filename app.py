@@ -37,11 +37,19 @@ def process_pdfs(uploaded_files):
     documents = []
 
     for file in uploaded_files:
-        # Save temporarily
+        if file is None or file.size == 0:
+            st.warning(f"{file.name} is empty or invalid. Skipping.")
+            continue
+
         with tempfile.NamedTemporaryFile(delete=False, suffix=".pdf") as tmp:
             tmp.write(file.getbuffer())
-            loader = PyPDFLoader(tmp.name)
-            documents.extend(loader.load())
+            tmp.flush()  # ✅ VERY IMPORTANT
+
+            try:
+                loader = PyPDFLoader(tmp.name)
+                documents.extend(loader.load())
+            except Exception as e:
+                st.error(f"Error processing {file.name}: {e}")
 
     # Split text
     splitter = RecursiveCharacterTextSplitter(
